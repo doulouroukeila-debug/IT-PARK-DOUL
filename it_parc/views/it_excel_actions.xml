@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_export_inventory_xlsx" model="ir.actions.act_url">
+        <field name="name">Export inventaire</field>
+        <field name="url">/it_parc/export/inventory</field>
+        <field name="target">self</field>
+    </record>
+
+    <record id="action_export_maintenance_costs_xlsx" model="ir.actions.act_url">
+        <field name="name">Export coûts maintenance</field>
+        <field name="url">/it_parc/export/maintenance_costs</field>
+        <field name="target">self</field>
+    </record>
+
+    <record id="action_export_contracts_xlsx" model="ir.actions.act_url">
+        <field name="name">Export contrats expirants</field>
+        <field name="url">/it_parc/export/contracts</field>
+        <field name="target">self</field>
+    </record>
+</odoo>

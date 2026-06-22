@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_it_maintenance_history" model="ir.actions.report">
+        <field name="name">Historique des maintenances</field>
+        <field name="model">it.intervention</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">it_parc.report_it_maintenance_history</field>
+        <field name="report_file">it_parc.report_it_maintenance_history</field>
+        <field name="binding_model_id" ref="model_it_intervention"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_it_maintenance_history">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <h2>Historique des maintenances</h2>
+                    <p>
+                        Généré le <span t-esc="datetime.now().strftime('%d/%m/%Y %H:%M')"/>
+                        <t t-if="data and data.get('date_start')">
+                            - Du <span t-esc="data['date_start']"/>
+                        </t>
+                        <t t-if="data and data.get('date_end')">
+                            au <span t-esc="data['date_end']"/>
+                        </t>
+                    </p>
+
+                    <p>
+                        <strong>Total interventions:</strong> <span t-esc="len(docs)"/>
+                        <strong> | Coût total:</strong>
+                        <span t-esc="total_cost"/>
+                    </p>
+
+                    <table class="table table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Équipement</th>
+                                <th>Type</th>
+                                <th>Titre</th>
+                                <th>Technicien</th>
+                                <th>Début</th>
+                                <th>Fin</th>
+                                <th>Durée (h)</th>
+                                <th>Coût</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="docs" t-as="intv">
+                                <td t-esc="intv.equipment_id.name"/>
+                                <td t-esc="dict(intv._fields['type'].selection).get(intv.type)"/>
+                                <td t-esc="intv.title"/>
+                                <td t-esc="intv.technician_id.name"/>
+                                <td t-esc="intv.date_start"/>
+                                <td t-esc="intv.date_end or ''"/>
+                                <td t-esc="intv.duration_hours"/>
+                                <td t-esc="intv.cost" t-options="{'widget': 'monetary', 'display_currency': intv.currency_id}"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

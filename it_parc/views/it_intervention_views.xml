@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_it_intervention_tree" model="ir.ui.view">
+        <field name="name">it.intervention.tree</field>
+        <field name="model">it.intervention</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="equipment_id"/>
+                <field name="type"/>
+                <field name="title"/>
+                <field name="technician_id"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="duration_hours"/>
+                <field name="cost"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_it_intervention_form" model="ir.ui.view">
+        <field name="name">it.intervention.form</field>
+        <field name="model">it.intervention</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_start" type="object"
+                            string="Démarrer" class="btn-primary"
+                            states="planned"/>
+                    <button name="action_done" type="object"
+                            string="Terminer" class="btn-success"
+                            states="in_progress"/>
+                    <button name="action_cancel" type="object"
+                            string="Annuler"
+                            states="planned,in_progress"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="planned,in_progress,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="equipment_id"/>
+                            <field name="type"/>
+                            <field name="title"/>
+                            <field name="technician_id"/>
+                        </group>
+                        <group>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="duration_hours" readonly="1"
+                                    widget="float_time"/>
+                            <field name="cost"/>
+                        </group>
+                    </group>
+                    <field name="description"/>
+                    <field name="report" widget="html"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Calendar view -->
+    <record id="view_it_intervention_calendar" model="ir.ui.view">
+        <field name="name">it.intervention.calendar</field>
+        <field name="model">it.intervention</field>
+        <field name="arch" type="xml">
+            <calendar date_start="date_start" date_stop="date_end"
+                      color="technician_id">
+                <field name="title"/>
+                <field name="technician_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_it_intervention_search" model="ir.ui.view">
+        <field name="name">it.intervention.search</field>
+        <field name="model">it.intervention</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="title"/>
+                <field name="equipment_id"/>
+                <field name="technician_id"/>
+                <filter name="filter_corrective" string="Correctives"
+                        domain="[('type','=','corrective')]"/>
+                <filter name="filter_preventive" string="Préventives"
+                        domain="[('type','=','preventive')]"/>
+                <filter name="filter_planned" string="Planifiées"
+                        domain="[('state','=','planned')]"/>
+                <filter name="filter_in_progress" string="En cours"
+                        domain="[('state','=','in_progress')]"/>
+                <filter name="filter_done" string="Terminées"
+                        domain="[('state','=','done')]"/>
+                <separator/>
+                <filter name="group_type" string="Type"
+                        context="{'group_by':'type'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_it_intervention" model="ir.actions.act_window">
+        <field name="name">Interventions</field>
+        <field name="res_model">it.intervention</field>
+        <field name="view_mode">tree,form,calendar</field>
+    </record>
+
+    <!-- Intervention report action -->
+    <record id="action_report_it_intervention" model="ir.actions.report">
+        <field name="name">Rapport d'intervention</field>
+        <field name="model">it.intervention</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">it_parc.report_it_intervention</field>
+        <field name="report_file">it_parc.report_it_intervention</field>
+        <field name="binding_model_id" ref="model_it_intervention"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
