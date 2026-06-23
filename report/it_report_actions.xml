@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_equipment_card" model="ir.actions.report">
+        <field name="name">Fiche équipement</field>
+        <field name="model">it.equipment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">it_parc.report_equipment_card</field>
+        <field name="report_file">it_parc.report_equipment_card</field>
+        <field name="binding_model_id" ref="model_it_equipment"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Fiche_' + object.code + '_' + object.name</field>
+    </record>
+
+    <record id="action_report_inventory" model="ir.actions.report">
+        <field name="name">Rapport inventaire</field>
+        <field name="model">it.equipment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">it_parc.report_inventory</field>
+        <field name="report_file">it_parc.report_inventory</field>
+        <field name="binding_model_id" ref="model_it_equipment"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Inventaire_Parc_' + (context.get('date') or datetime.date.today().strftime('%Y%m%d'))</field>
+    </record>
+
+    <record id="action_report_maintenance_history" model="ir.actions.report">
+        <field name="name">Historique maintenances</field>
+        <field name="model">it.intervention</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">it_parc.report_maintenance_history</field>
+        <field name="report_file">it_parc.report_maintenance_history</field>
+        <field name="binding_model_id" ref="model_it_intervention"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Historique_Maintenances_' + datetime.date.today().strftime('%Y%m%d')</field>
+    </record>
+</odoo>

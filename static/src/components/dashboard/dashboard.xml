@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="it_parc.dashboard" owl="1">
+        <div class="o_it_parc_dashboard">
+            <div class="container-fluid">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h2>Tableau de bord - Parc Informatique</h2>
+                    </div>
+                </div>
+
+                <t t-if="state.loading">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <i class="fa fa-spinner fa-spin fa-3x"></i>
+                            <p>Chargement des données...</p>
+                        </div>
+                    </div>
+                </t>
+
+                <t t-else="">
+                    <!-- KPI Cards -->
+                    <div class="row mb-4">
+                        <div class="col-xl-2 col-md-4 col-sm-6 mb-3" t-on-click="openEquipments">
+                            <div class="card border-primary h-100" style="cursor: pointer;">
+                                <div class="card-body text-center">
+                                    <i class="fa fa-server fa-2x text-primary mb-2"></i>
+                                    <h3 class="card-title" t-esc="state.totalEquipments"/>
+                                    <p class="card-text text-muted">Total équipements</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-md-4 col-sm-6 mb-3" t-on-click="openEquipments">
+                            <div class="card border-success h-100" style="cursor: pointer;">
+                                <div class="card-body text-center">
+                                    <i class="fa fa-check-circle fa-2x text-success mb-2"></i>
+                                    <h3 class="card-title" t-esc="state.assignedCount"/>
+                                    <p class="card-text text-muted">Affectés</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-md-4 col-sm-6 mb-3" t-on-click="openEquipments">
+                            <div class="card border-warning h-100" style="cursor: pointer;">
+                                <div class="card-body text-center">
+                                    <i class="fa fa-wrench fa-2x text-warning mb-2"></i>
+                                    <h3 class="card-title" t-esc="state.maintenanceCount"/>
+                                    <p class="card-text text-muted">En maintenance</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-md-4 col-sm-6 mb-3" t-on-click="openAlerts">
+                            <div class="card border-danger h-100" style="cursor: pointer;">
+                                <div class="card-body text-center">
+                                    <i class="fa fa-bell fa-2x text-danger mb-2"></i>
+                                    <h3 class="card-title" t-esc="state.alertCount"/>
+                                    <p class="card-text text-muted">Alertes actives</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-md-4 col-sm-6 mb-3" t-on-click="openContracts">
+                            <div class="card border-info h-100" style="cursor: pointer;">
+                                <div class="card-body text-center">
+                                    <i class="fa fa-file-contract fa-2x text-info mb-2"></i>
+                                    <h3 class="card-title" t-esc="state.activeContractCount"/>
+                                    <p class="card-text text-muted">Contrats actifs</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-md-4 col-sm-6 mb-3" t-on-click="openInterventions">
+                            <div class="card border-secondary h-100" style="cursor: pointer;">
+                                <div class="card-body text-center">
+                                    <i class="fa fa-money-bill fa-2x text-secondary mb-2"></i>
+                                    <h3 class="card-title" t-esc="state.totalMaintenanceCost.toLocaleString()"/>
+                                    <p class="card-text text-muted">Coût maintenance (FCFA)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Second row of KPIs -->
+                    <div class="row mb-4">
+                        <div class="col-xl-2 col-md-4 col-sm-6 mb-3" t-on-click="openEquipments">
+                            <div class="card border-danger h-100" style="cursor: pointer;">
+                                <div class="card-body text-center">
+                                    <i class="fa fa-exclamation-triangle fa-2x text-danger mb-2"></i>
+                                    <h3 class="card-title" t-esc="state.expiringWarrantyCount"/>
+                                    <p class="card-text text-muted">Garanties expirant (&lt;30j)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-md-4 col-sm-6 mb-3" t-on-click="openEquipments">
+                            <div class="card border-dark h-100" style="cursor: pointer;">
+                                <div class="card-body text-center">
+                                    <i class="fa fa-box fa-2x text-dark mb-2"></i>
+                                    <h3 class="card-title" t-esc="state.draftCount"/>
+                                    <p class="card-text text-muted">Non affectés (Brouillon)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-md-4 col-sm-6 mb-3" t-on-click="openEquipments">
+                            <div class="card border-danger h-100" style="cursor: pointer;">
+                                <div class="card-body text-center">
+                                    <i class="fa fa-recycle fa-2x text-danger mb-2"></i>
+                                    <h3 class="card-title" t-esc="state.retiredCount"/>
+                                    <p class="card-text text-muted">Retirés</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chart: Bar chart using SVG -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Répartition des équipements par statut</h5>
+                                </div>
+                                <div class="card-body">
+                                    <t t-if="state.chartData.length > 0">
+                                        <div class="d-flex justify-content-around align-items-end" style="height: 250px;">
+                                            <t t-foreach="state.chartData" t-as="item" t-key="item_index">
+                                                <div class="text-center" style="flex: 1; max-width: 150px;">
+                                                    <div class="mb-1" t-esc="item.value"/>
+                                                    <div t-attf-style="height: {{ item.value / Math.max(...state.chartData.map(d => d.value)) * 200 }}px; background-color: {{ item.label === 'Brouillon' ? '#17a2b8' : item.label === 'Affecté' ? '#28a745' : item.label === 'En maintenance' ? '#ffc107' : '#dc3545' }}; width: 60%; margin: 0 auto; border-radius: 4px 4px 0 0; min-height: 10px;">
+                                                    </div>
+                                                    <div class="mt-1 small" t-esc="item.label"/>
+                                                </div>
+                                            </t>
+                                        </div>
+                                    </t>
+                                    <t t-else="">
+                                        <p class="text-center text-muted">Aucune donnée disponible</p>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>

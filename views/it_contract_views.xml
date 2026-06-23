@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_it_contract_tree" model="ir.ui.view">
+        <field name="name">it.contract.tree</field>
+        <field name="model">it.contract</field>
+        <field name="arch" type="xml">
+            <list string="Contrats" decoration-danger="remaining_days &lt;= 15 and remaining_days &gt; 0" decoration-warning="remaining_days &lt;= 30 and remaining_days &gt; 15">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="contract_type"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="remaining_days" readonly="1"/>
+                <field name="amount" widget="monetary"/>
+                <field name="state"/>
+                <field name="equipment_count"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_it_contract_form" model="ir.ui.view">
+        <field name="name">it.contract.form</field>
+        <field name="model">it.contract</field>
+        <field name="arch" type="xml">
+            <form string="Contrat">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,expired,renewed"/>
+                    <button name="action_renew" string="Renouveler" type="object" invisible="state != 'active'" class="btn-primary"/>
+                    <button name="action_expire" string="Marquer expiré" type="object" invisible="state != 'active'" class="btn-danger"/>
+                </header>
+                <sheet>
+                    <field name="currency_id" invisible="1"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Libellé du contrat..."/>
+                        </h1>
+                        <group>
+                            <field name="ref" placeholder="Référence contrat"/>
+                        </group>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="contract_type"/>
+                        </group>
+                        <group>
+                            <field name="amount" widget="monetary"/>
+                            <field name="remaining_days" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
+                        <group>
+                            <field name="equipment_count" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Équipements couverts">
+                            <field name="contract_line_ids">
+                                <list editable="bottom">
+                                    <field name="equipment_id"/>
+                                    <field name="coverage_details"/>
+                                    <field name="description"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                        <page string="Documents">
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_it_contract_search" model="ir.ui.view">
+        <field name="name">it.contract.search</field>
+        <field name="model">it.contract</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <filter name="filter_active" string="Actif" domain="[('state', '=', 'active')]"/>
+                <filter name="filter_expiring" string="Expire bientôt" domain="[('remaining_days', '&gt;', 0), ('remaining_days', '&lt;=', 30)]"/>
+                <filter name="filter_expired" string="Expiré" domain="[('state', '=', 'expired')]"/>
+                <group expand="0" string="Groupes">
+                    <filter name="group_type" string="Type" context="{'group_by': 'contract_type'}"/>
+                    <filter name="group_partner" string="Fournisseur" context="{'group_by': 'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_it_contract" model="ir.actions.act_window">
+        <field name="name">Contrats</field>
+        <field name="res_model">it.contract</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_it_contract_search"/>
+        <field name="help" type="html">
+            <p>Gérez vos contrats de maintenance, licences et supports fournisseurs.</p>
+        </field>
+    </record>
+
+    <!-- Excel export: expiring contracts -->
+    <record id="action_export_expiring_contracts_xlsx" model="ir.actions.server">
+        <field name="name">Exporter contrats expirants (Excel)</field>
+        <field name="model_id" ref="model_it_contract"/>
+        <field name="binding_model_id" ref="model_it_contract"/>
+        <field name="state">code</field>
+        <field name="code">action = model.export_expiring_contracts_xlsx()</field>
+    </record>
+</odoo>

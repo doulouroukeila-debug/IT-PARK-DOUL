@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="cat_pc" model="it.equipment.category">
+            <field name="name">Poste de travail</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="cat_server" model="it.equipment.category">
+            <field name="name">Serveur</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="cat_printer" model="it.equipment.category">
+            <field name="name">Imprimante</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="cat_network" model="it.equipment.category">
+            <field name="name">Équipement réseau</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="cat_phone" model="it.equipment.category">
+            <field name="name">Téléphone IP</field>
+            <field name="sequence">50</field>
+        </record>
+        <record id="cat_laptop" model="it.equipment.category">
+            <field name="name">Ordinateur portable</field>
+            <field name="sequence">15</field>
+            <field name="parent_id" ref="cat_pc"/>
+        </record>
+        <record id="cat_desktop" model="it.equipment.category">
+            <field name="name">Ordinateur de bureau</field>
+            <field name="sequence">12</field>
+            <field name="parent_id" ref="cat_pc"/>
+        </record>
+    </data>
+</odoo>

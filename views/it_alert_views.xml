@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_it_alert_tree" model="ir.ui.view">
+        <field name="name">it.alert.tree</field>
+        <field name="model">it.alert</field>
+        <field name="arch" type="xml">
+            <list string="Alertes" decoration-danger="state == 'pending' and days_before_expiry &lt;= 15" decoration-warning="state == 'pending' and days_before_expiry &lt;= 30 and days_before_expiry &gt; 15">
+                <field name="name"/>
+                <field name="alert_type"/>
+                <field name="equipment_id"/>
+                <field name="contract_id"/>
+                <field name="old_date"/>
+                <field name="days_before_expiry" readonly="1"/>
+                <field name="alert_date"/>
+                <field name="state"/>
+                <field name="is_read"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_it_alert_form" model="ir.ui.view">
+        <field name="name">it.alert.form</field>
+        <field name="model">it.alert</field>
+        <field name="arch" type="xml">
+            <form string="Alerte">
+                <header>
+                    <button name="action_resolve" string="Résoudre" type="object" invisible="state != 'pending'" class="btn-success"/>
+                    <button name="action_mark_read" string="Marquer comme lu" type="object" invisible="state != 'pending'" class="btn-secondary"/>
+                    <button name="action_open_related" string="Voir l'élément lié" type="object" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="alert_type"/>
+                            <field name="state"/>
+                        </group>
+                        <group>
+                            <field name="alert_date"/>
+                            <field name="old_date"/>
+                            <field name="days_before_expiry"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="equipment_id" invisible="alert_type != 'warranty'"/>
+                        <field name="contract_id" invisible="alert_type != 'contract'"/>
+                        <field name="user_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_it_alert_search" model="ir.ui.view">
+        <field name="name">it.alert.search</field>
+        <field name="model">it.alert</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <filter name="filter_pending" string="En attente" domain="[('state', '=', 'pending')]"/>
+                <filter name="filter_resolved" string="Résolu" domain="[('state', '=', 'resolved')]"/>
+                <filter name="filter_warranty" string="Garantie" domain="[('alert_type', '=', 'warranty')]"/>
+                <filter name="filter_contract" string="Contrat" domain="[('alert_type', '=', 'contract')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_it_alert" model="ir.actions.act_window">
+        <field name="name">Alertes</field>
+        <field name="res_model">it.alert</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_it_alert_search"/>
+        <field name="help" type="html">
+            <p>Visualisez les alertes automatiques pour les garanties et contrats arrivant à expiration.</p>
+        </field>
+    </record>
+</odoo>

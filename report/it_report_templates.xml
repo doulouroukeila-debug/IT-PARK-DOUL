@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Equipment Card Report -->
+    <template id="report_equipment_card">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <h2 class="text-center">Fiche d'Équipement</h2>
+                        <table class="table table-bordered" style="margin-top: 20px;">
+                            <tr>
+                                <td width="30%"><strong>Code</strong></td>
+                                <td width="70%"><span t-field="doc.code"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Nom</strong></td>
+                                <td><span t-field="doc.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Catégorie</strong></td>
+                                <td><span t-field="doc.category_id"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Marque</strong></td>
+                                <td><span t-field="doc.brand"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Modèle</strong></td>
+                                <td><span t-field="doc.model"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Numéro de série</strong></td>
+                                <td><span t-field="doc.serial_number"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Processeur</strong></td>
+                                <td><span t-field="doc.processor"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>RAM</strong></td>
+                                <td><span t-field="doc.ram"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Stockage</strong></td>
+                                <td><span t-field="doc.storage"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>OS</strong></td>
+                                <td><span t-field="doc.os"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Employé</strong></td>
+                                <td><span t-field="doc.employee_id"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Département</strong></td>
+                                <td><span t-field="doc.department_id"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Site</strong></td>
+                                <td><span t-field="doc.site"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Localisation</strong></td>
+                                <td><span t-field="doc.location"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Statut</strong></td>
+                                <td><span t-field="doc.state"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Date d'achat</strong></td>
+                                <td><span t-field="doc.purchase_date"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Valeur d'achat</strong></td>
+                                <td><span t-field="doc.purchase_value"/> <span t-field="doc.currency_id"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fin de garantie</strong></td>
+                                <td><span t-field="doc.warranty_date"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fournisseur</strong></td>
+                                <td><span t-field="doc.supplier_id"/></td>
+                            </tr>
+                        </table>
+                        <p><em>Date d'impression : <span t-esc="time.strftime('%d/%m/%Y')"/></em></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Inventory Report -->
+    <template id="report_inventory">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <h2 class="text-center">Rapport d'Inventaire</h2>
+                        <p class="text-center">Parc informatique - TECHPARK CI</p>
+                        <p class="text-center"><em>Date : <span t-esc="time.strftime('%d/%m/%Y')"/></em></p>
+                        <table class="table table-bordered" style="margin-top: 20px;">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Nom</th>
+                                    <th>Catégorie</th>
+                                    <th>Marque</th>
+                                    <th>N° Série</th>
+                                    <th>Employé</th>
+                                    <th>Statut</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="docs" t-as="eq">
+                                    <td><span t-field="eq.code"/></td>
+                                    <td><span t-field="eq.name"/></td>
+                                    <td><span t-field="eq.category_id"/></td>
+                                    <td><span t-field="eq.brand"/></td>
+                                    <td><span t-field="eq.serial_number"/></td>
+                                    <td><span t-field="eq.employee_id"/></td>
+                                    <td><span t-field="eq.state"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p><strong>Total équipements : </strong><t t-esc="len(docs)"/></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Maintenance History Report -->
+    <template id="report_maintenance_history">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <h2 class="text-center">Historique des Maintenances</h2>
+                        <p class="text-center">Période : Toutes les interventions</p>
+                        <table class="table table-bordered" style="margin-top: 20px;">
+                            <thead>
+                                <tr>
+                                    <th>Équipement</th>
+                                    <th>Intervention</th>
+                                    <th>Technicien</th>
+                                    <th>Type</th>
+                                    <th>Date début</th>
+                                    <th>Date fin</th>
+                                    <th>Durée (h)</th>
+                                    <th>Coût</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="docs" t-as="inv">
+                                    <td><span t-field="inv.equipment_id"/></td>
+                                    <td><span t-field="inv.name"/></td>
+                                    <td><span t-field="inv.technician_id"/></td>
+                                    <td><span t-field="inv.intervention_type"/></td>
+                                    <td><span t-field="inv.start_date"/></td>
+                                    <td><span t-field="inv.end_date"/></td>
+                                    <td><span t-field="inv.duration_hours"/></td>
+                                    <td><span t-field="inv.cost"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p><strong>Coût total : </strong><span t-esc="sum(docs.mapped('cost'))"/></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

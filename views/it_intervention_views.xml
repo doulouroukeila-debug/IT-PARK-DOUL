@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_it_intervention_tree" model="ir.ui.view">
+        <field name="name">it.intervention.tree</field>
+        <field name="model">it.intervention</field>
+        <field name="arch" type="xml">
+            <list string="Interventions">
+                <field name="name"/>
+                <field name="equipment_id"/>
+                <field name="technician_id"/>
+                <field name="intervention_type"/>
+                <field name="planned_date"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="duration_hours"/>
+                <field name="cost" widget="monetary"/>
+                <field name="state" decoration-warning="state == 'in_progress'" decoration-success="state == 'done'" decoration-danger="state == 'cancelled'" decoration-info="state == 'planned'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_it_intervention_form" model="ir.ui.view">
+        <field name="name">it.intervention.form</field>
+        <field name="model">it.intervention</field>
+        <field name="arch" type="xml">
+            <form string="Intervention">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="planned,in_progress,done"/>
+                    <button name="action_start" string="Démarrer" type="object" invisible="state != 'planned'" class="btn-primary"/>
+                    <button name="action_done" string="Terminer" type="object" invisible="state != 'in_progress'" class="btn-success"/>
+                    <button name="action_cancel" string="Annuler" type="object" invisible="state not in ('planned','in_progress')" class="btn-danger"/>
+                </header>
+                <sheet>
+                    <field name="currency_id" invisible="1"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Titre de l'intervention..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="equipment_id"/>
+                            <field name="technician_id"/>
+                            <field name="intervention_type"/>
+                        </group>
+                        <group>
+                            <field name="planned_date"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description" placeholder="Description de la panne / intervention..."/>
+                        </page>
+                        <page string="Rapport">
+                            <field name="report" placeholder="Rapport d'intervention..."/>
+                        </page>
+                        <page string="Coût">
+                            <group>
+                                <field name="cost" widget="monetary"/>
+                                <field name="duration_hours" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_it_intervention_search" model="ir.ui.view">
+        <field name="name">it.intervention.search</field>
+        <field name="model">it.intervention</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="equipment_id"/>
+                <field name="technician_id"/>
+                <filter name="filter_corrective" string="Corrective" domain="[('intervention_type', '=', 'corrective')]"/>
+                <filter name="filter_preventive" string="Préventive" domain="[('intervention_type', '=', 'preventive')]"/>
+                <separator/>
+                <filter name="filter_planned" string="Planifiée" domain="[('state', '=', 'planned')]"/>
+                <filter name="filter_in_progress" string="En cours" domain="[('state', '=', 'in_progress')]"/>
+                <filter name="filter_done" string="Terminée" domain="[('state', '=', 'done')]"/>
+                <group expand="0" string="Groupes">
+                    <filter name="group_equipment" string="Équipement" context="{'group_by': 'equipment_id'}"/>
+                    <filter name="group_type" string="Type" context="{'group_by': 'intervention_type'}"/>
+                    <filter name="group_technician" string="Technicien" context="{'group_by': 'technician_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Calendar view for interventions -->
+    <record id="view_it_intervention_calendar" model="ir.ui.view">
+        <field name="name">it.intervention.calendar</field>
+        <field name="model">it.intervention</field>
+        <field name="arch" type="xml">
+            <calendar string="Interventions planifiées" date_start="planned_date" color="equipment_id">
+                <field name="name"/>
+                <field name="equipment_id"/>
+                <field name="technician_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Graph view -->
+    <record id="view_it_intervention_graph" model="ir.ui.view">
+        <field name="name">it.intervention.graph</field>
+        <field name="model">it.intervention</field>
+        <field name="arch" type="xml">
+            <graph string="Coût des interventions" type="bar">
+                <field name="equipment_id"/>
+                <field name="cost" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_it_intervention" model="ir.actions.act_window">
+        <field name="name">Interventions</field>
+        <field name="res_model">it.intervention</field>
+        <field name="view_mode">list,form,calendar,graph</field>
+        <field name="search_view_id" ref="view_it_intervention_search"/>
+        <field name="help" type="html">
+            <p>Suivez les interventions de maintenance corrective et préventive sur vos équipements.</p>
+        </field>
+    </record>
+
+    <!-- Excel export: maintenance costs -->
+    <record id="action_export_maintenance_costs_xlsx" model="ir.actions.server">
+        <field name="name">Exporter coûts maintenance (Excel)</field>
+        <field name="model_id" ref="model_it_intervention"/>
+        <field name="binding_model_id" ref="model_it_intervention"/>
+        <field name="state">code</field>
+        <field name="code">action = model.export_maintenance_costs_xlsx()</field>
+    </record>
+
+</odoo>

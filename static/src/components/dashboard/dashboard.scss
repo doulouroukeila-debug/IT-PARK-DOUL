@@ -1,0 +1,36 @@
+.o_it_parc_dashboard {
+    padding: 20px;
+    background-color: #f8f9fa;
+    min-height: 600px;
+
+    .card {
+        transition: transform 0.2s, box-shadow 0.2s;
+        border-radius: 8px;
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+    }
+
+    .card-title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin: 5px 0;
+    }
+
+    .card-text {
+        font-size: 0.85rem;
+        margin: 0;
+    }
+
+    h2 {
+        color: #2C3E50;
+        font-weight: 600;
+    }
+
+    .card-header h5 {
+        margin: 0;
+        color: #2C3E50;
+    }
+}

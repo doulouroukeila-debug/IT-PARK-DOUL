@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main menu -->
+    <menuitem id="menu_it_parc_root" name="Parc Informatique" sequence="100" web_icon="it_parc,static/description/icon.png" groups="group_it_technician,group_it_manager"/>
+
+    <!-- Dashboard -->
+    <menuitem id="menu_it_dashboard" name="Tableau de bord" parent="menu_it_parc_root" action="action_it_dashboard_owl" sequence="1" groups="group_it_technician,group_it_manager"/>
+
+    <!-- Equipment -->
+    <menuitem id="menu_it_equipment" name="Équipements" parent="menu_it_parc_root" action="action_it_equipment" sequence="10" groups="group_it_technician,group_it_manager"/>
+
+    <!-- Interventions -->
+    <menuitem id="menu_it_intervention" name="Interventions" parent="menu_it_parc_root" action="action_it_intervention" sequence="20" groups="group_it_technician,group_it_manager"/>
+
+    <!-- Assignments -->
+    <menuitem id="menu_it_assignment" name="Affectations" parent="menu_it_parc_root" action="action_it_assignment" sequence="30" groups="group_it_manager"/>
+
+    <!-- Contracts -->
+    <menuitem id="menu_it_contract" name="Contrats" parent="menu_it_parc_root" action="action_it_contract" sequence="40" groups="group_it_technician,group_it_manager"/>
+
+    <!-- Alerts -->
+    <menuitem id="menu_it_alert" name="Alertes" parent="menu_it_parc_root" action="action_it_alert" sequence="50" groups="group_it_technician,group_it_manager"/>
+
+    <!-- Category action -->
+    <record id="action_it_equipment_category" model="ir.actions.act_window">
+        <field name="name">Catégories</field>
+        <field name="res_model">it.equipment.category</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Wizard actions -->
+    <record id="action_it_csv_import_wizard" model="ir.actions.act_window">
+        <field name="name">Import CSV</field>
+        <field name="res_model">it.csv.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_it_scan_alert_wizard" model="ir.actions.act_window">
+        <field name="name">Scan des alertes</field>
+        <field name="res_model">it.scan.alert.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Tools submenu -->
+    <menuitem id="menu_it_tools" name="Outils" parent="menu_it_parc_root" sequence="100" groups="group_it_manager"/>
+    <menuitem id="menu_it_csv_import" name="Import CSV" parent="menu_it_tools" action="action_it_csv_import_wizard" sequence="10" groups="group_it_manager"/>
+    <menuitem id="menu_it_scan_alerts" name="Scan manuel des alertes" parent="menu_it_tools" action="action_it_scan_alert_wizard" sequence="20" groups="group_it_manager"/>
+
+    <!-- Configuration submenu -->
+    <menuitem id="menu_it_config" name="Configuration" parent="menu_it_parc_root" sequence="200" groups="group_it_manager"/>
+    <menuitem id="menu_it_equipment_category" name="Catégories d'équipements" parent="menu_it_config" action="action_it_equipment_category" sequence="10" groups="group_it_manager"/>
+</odoo>
