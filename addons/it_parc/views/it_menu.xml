@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_it_parc_root"
+              name="Parc Informatique"
+              sequence="10"
+              groups="group_it_technician,group_it_manager"/>
+    <menuitem id="menu_it_equipments"
+              name="Équipements"
+              parent="menu_it_parc_root"
+              sequence="10"
+              action="action_it_equipment"
+              groups="group_it_technician,group_it_manager"/>
+</odoo>

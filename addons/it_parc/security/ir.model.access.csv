@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_it_equipment_technician,it.equipment.technician,model_it_equipment,group_it_technician,1,0,0,0
+access_it_equipment_manager,it.equipment.manager,model_it_equipment,group_it_manager,1,1,1,1

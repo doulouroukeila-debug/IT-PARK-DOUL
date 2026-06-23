@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="demo_eq_01" model="it.equipment">
+            <field name="name">PC Portable Dell Latitude 5540</field>
+            <field name="category">workstation</field>
+            <field name="serial_number">DL5X3Z2</field>
+            <field name="state">draft</field>
+        </record>
+        <record id="demo_eq_02" model="it.equipment">
+            <field name="name">Serveur Dell PowerEdge R760</field>
+            <field name="category">server</field>
+            <field name="serial_number">SVR-DE-001</field>
+            <field name="state">draft</field>
+        </record>
+        <record id="demo_eq_03" model="it.equipment">
+            <field name="name">Imprimante Ricoh IM C4500</field>
+            <field name="category">printer</field>
+            <field name="serial_number">RCH-001</field>
+            <field name="state">draft</field>
+        </record>
+        <record id="demo_eq_04" model="it.equipment">
+            <field name="name">Switch Cisco Catalyst 9300</field>
+            <field name="category">network</field>
+            <field name="serial_number">CSC-001</field>
+            <field name="state">draft</field>
+        </record>
+        <record id="demo_eq_05" model="it.equipment">
+            <field name="name">Téléphone IP Cisco 8845</field>
+            <field name="category">phone</field>
+            <field name="serial_number">CP-001</field>
+            <field name="state">draft</field>
+        </record>
+        <record id="demo_eq_06" model="it.equipment">
+            <field name="name">PC Fixe Lenovo ThinkCentre M80q</field>
+            <field name="category">workstation</field>
+            <field name="serial_number">LNV-001</field>
+            <field name="state">draft</field>
+        </record>
+        <record id="demo_eq_07" model="it.equipment">
+            <field name="name">NAS Synology RS2423RP+</field>
+            <field name="category">server</field>
+            <field name="serial_number">SYN-001</field>
+            <field name="state">draft</field>
+        </record>
+        <record id="demo_eq_08" model="it.equipment">
+            <field name="name">Station de travail HP Z4 G5</field>
+            <field name="category">workstation</field>
+            <field name="serial_number">HPZ4-001</field>
+            <field name="state">draft</field>
+        </record>
+        <record id="demo_eq_09" model="it.equipment">
+            <field name="name">Imprimante HP LaserJet M507</field>
+            <field name="category">printer</field>
+            <field name="serial_number">HPLJ-001</field>
+            <field name="state">draft</field>
+        </record>
+        <record id="demo_eq_10" model="it.equipment">
+            <field name="name">Pare-feu Fortinet FortiGate 100F</field>
+            <field name="category">network</field>
+            <field name="serial_number">FTG-001</field>
+            <field name="state">draft</field>
+        </record>
+    </data>
+</odoo>
