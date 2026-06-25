@@ -1,6 +1,6 @@
 # Module IT_PARC - Gestion de Parc Informatique
 
-Module Odoo 18 personnalisé développé pour **TECHPARK CI** (Abidjan, Côte d'Ivoire).
+Module Odoo 18 Enterprise personnalisé développé pour **TECHPARK CI** (Abidjan, Côte d'Ivoire).
 
 ## Fonctionnalités
 

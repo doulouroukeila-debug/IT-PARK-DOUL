@@ -2,11 +2,11 @@
     'name': 'Gestion de Parc Informatique - IT_PARC',
     'version': '1.0.0',
     'category': 'Industries',
-    'summary': 'Module de gestion de parc informatique pour TECHPARK CI',
+    'summary': 'Odoo 18 Enterprise - Gestion de parc informatique pour TECHPARK CI',
     'description': """
 Module IT_PARC - Gestion de Parc Informatique
 ==============================================
-Module personnalisé développé pour TECHPARK CI (Abidjan, Côte d'Ivoire).
+Module personnalisé pour Odoo 18 Enterprise, développé pour TECHPARK CI (Abidjan, Côte d'Ivoire).
 
 Fonctionnalités principales:
 - Gestion des équipements informatiques avec workflow (Brouillon → Affecté → En maintenance → Retiré)
@@ -57,7 +57,7 @@ Fonctionnalités principales:
         'data/it_parc_demo.xml',
     ],
     'assets': {
-        'web.assets_frontend': [
+        'web.assets_backend': [
             'it_parc/static/src/components/dashboard/dashboard.js',
             'it_parc/static/src/components/dashboard/dashboard.xml',
             'it_parc/static/src/components/dashboard/dashboard.scss',
